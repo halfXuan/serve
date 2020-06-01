@@ -2,11 +2,13 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-28 09:48:50
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-29 10:27:30
+ * @LastEditTime: 2020-06-01 17:28:52
  */
 const express = require('express')
 const router = express.Router()
 const Labels = require('./../model/label')
+const tokenConfig = require('./../utils/tokens')
+
 /**
  * @name: 增加标签
  * @param {String} name
@@ -90,7 +92,7 @@ router.post('/deleteLabel', (req, res, next) => {
         const noDate = parseInt(dates.getTime() / 1000);
         if (exp > noDate) {
             const { id } = req.body
-            Labels.findOneAndDelete({ _id: id }, (err, doc) => {
+            Labels.findByIdAndDelete({ _id: id }, (err, doc) => {
                 if (err) {
                     res.send({ isSuccess: false, message: '删除失败' });
                 } else {
