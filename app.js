@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:48:04
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-05-29 10:17:03
+ * @LastEditTime: 2020-06-08 18:30:44
  */ 
 var createError = require('http-errors');
 var express = require('express');
@@ -43,7 +43,8 @@ var options = {
 }
 var swaggerSpec = swaggerDoc(options);
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerSpec))
-
+ //暴漏静态资源文件 暴漏之后我们可以通过域名访问该文件下的资源
+//  app.use(express.static('uploads'))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

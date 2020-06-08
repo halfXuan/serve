@@ -2,7 +2,7 @@
  * @Author: 471826078@qq.com
  * @Date: 2020-05-21 09:48:04
  * @LastEditors: 471826078@qq.com
- * @LastEditTime: 2020-06-05 17:14:50
+ * @LastEditTime: 2020-06-08 18:32:59
  */
 var express = require('express');
 var router = express.Router();
@@ -12,12 +12,10 @@ const path = require('path')
 let upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      console.log(req.body);
-      console.log(11);
-      cb(null, './uploads/images');
+      cb(null, '../public/uploads');
     },
     filename: function (req, file, cb) {
-      var changedName = (new Date().getTime()) + '-' + file.originalname;
+      var changedName = new Date().toISOString().replace(/:/g, '-') +'-'+ file.originalname;
       cb(null, changedName);
     }
   })
@@ -29,10 +27,6 @@ router.get('/', function (req, res, next) {
 
 //单个图片文件上传
 router.post('/uploadImage', upload.single('file'), (req, res) => {
-  console.log(22);
-  console.log(req.body);//获取到的age和name
-  console.log('__dirname', __dirname);
-
   if (!req.file) {  //判断一下文件是否存在，也可以在前端代码中进行判断。
     res.json({
       code: 0,
@@ -50,7 +44,7 @@ router.post('/uploadImage', upload.single('file'), (req, res) => {
     message: "上传成功！",
     data: req.file.path,
     originalname: req.file.originalname,
-    path: pathResult
+    path:'http://www.heyidangao.com:8089/' + pathResult
   })
 });
 
