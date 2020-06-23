@@ -7,9 +7,9 @@
 var jwt = require('jsonwebtoken')
 const { jwtSecret } = require('./../config')
 const secret = jwtSecret
-const createToken = (_id, expires, strTimes) => {
+const createToken = (_id, strTimes) => {
     const token = jwt.sign({ _id }, secret, {
-        expiresIn: expires + ' ' + strTimes
+        expiresIn: strTimes
     })
     return token
 }
@@ -25,7 +25,7 @@ const verifyToken = (_token) => {
 }
 const verToken = function(token) {
     return new Promise((resolve, reject) => {
-        var info = jwt.verify(token.split(' ')[1], signkey);
+        var info = jwt.verify(token, jwtSecret);
         resolve(info);
     })
 }

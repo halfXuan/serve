@@ -13,7 +13,7 @@ const swaggerDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const mongoose = require('mongoose')
 const expressJwt = require('express-jwt')
-const { verToken } = require('./utils/tokens')
+const verify = require('./utils/tokens')
 const { jwtSecret, noToken } = require('./config')
 
 var app = express();
@@ -56,7 +56,7 @@ app.use((req, res, next) => {
         if (token == undefined) {
             return next()
         } else {
-            verToken(token).then((data) => {
+            verify.verToken(token).then((data) => {
                 req.data = data
                 return next()
             }).catch((error) => {
@@ -65,13 +65,7 @@ app.use((req, res, next) => {
         }
     })
     //验证token是否过期并规定哪些路由不用验证
-console.log(jwtSecret);
 
-app.use(expressJwt({
-    secret: jwtSecret // 密匙
-}).unless({
-    path: noToken //除了这个地址，其他的URL都需要验证
-}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -86,16 +80,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var labelsRouter = require('./routes/label');
+var articleRouter = require('./routes/article')
+const { log } = require('console');
 
 app.use('/api/index', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/labels', labelsRouter);
-
+app.use('/api/articles', articleRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
 });
+app.use(expressJwt({
+    secret: jwtSecret // 密匙
+}).unless({
+    path: noToken //除了这个地址，其他的URL都需要验证
+}));
 //当token失效返回提示信息
 app.use(function(err, req, res, next) {
     if (err.status == 401) {

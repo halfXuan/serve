@@ -149,7 +149,7 @@ router.post('/adminLogin', (req, res, next) => {
                     if (users[0].types === 1) {
                         console.log(users[0]);
 
-                        let token = tokenConfig.createToken(users[0]._id, '24', 'hours')
+                        let token = tokenConfig.createToken(users[0]._id, 3600 * 24 * 3)
                         console.log(token);
 
                         users[0].token = token;
@@ -204,7 +204,7 @@ router.post('/login', (req, res, next) => {
                     res.send({ isSuccess: false, message: '该用户不存在' });
                 } else if (users[0].password == password) {
                     if (users[0].types === 0) {
-                        let token = tokenConfig.createToken(users[0]._id, '1', 'hours')
+                        let token = tokenConfig.createToken(users[0]._id, 3600 * 24 * 3)
                         users[0].token = token;
                         Users(users[0]).save(function(err) {
                             if (err) {
@@ -215,7 +215,7 @@ router.post('/login', (req, res, next) => {
                         })
                     } else if (users[0].types === 1) {
                         if (users[0].phone === adminPhone) {
-                            let token = tokenConfig.createToken(users[0]._id, '1', 'hours')
+                            let token = tokenConfig.createToken(users[0]._id, 3600 * 24 * 3)
                             users[0].token = token;
                             Users(users[0]).save(function(err) {
                                 if (err) {
