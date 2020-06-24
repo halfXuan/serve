@@ -87,16 +87,25 @@ router.post('/deleteArticle', (req, res, next) => {
      */
 router.post('/update', (req, res, next) => {
         const { _id, name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
+        console.log(_id, isTop);
         let updateStr = {};
         if (name) { updateStr.name = name }
-        if (labels.length) { updateStr.labels = labels }
+        console.log(_id, isTop);
+        if (labels) { updateStr.labels = labels }
+        console.log(_id, isTop, '1');
         if (isAuthor) { updateStr.isAuthor = isAuthor }
+        console.log(_id, isTop, '2');
         if (isTop) { updateStr.isTop = isTop }
+        console.log(_id, isTop, '3');
         if (isPublish) { updateStr.isPublish = isPublish }
+        console.log(_id, isTop, '4');
         if (imgUrl) { updateStr.imgUrl = imgUrl }
+        console.log(_id, isTop, '5');
         if (content) { updateStr.content = content }
         if (htmlContent) { updateStr.htmlContent = htmlContent }
-        Articles.findOneAndUpdate({ _id }, updateStr, (err) => {
+        console.log(_id, isTop);
+
+        Articles.findByIdAndUpdate({ _id }, updateStr, (err) => {
             if (err) {
                 res.send({ isSuccess: false, message: '文章修改失败' });
             } else {
@@ -128,7 +137,7 @@ router.post('/queryById', (req, res, next) => {
 router.post('/query', (req, res, next) => {
         const { pageSize, pageNo } = req.body
         let size = pageSize || 10
-        let num = pageNo || 0
+        let num = pageNo - 1 || 0
         Articles.find({}, (err, doc) => {
             if (err) {
                 res.send({ isSuccess: false, message: '查询失败' });
@@ -138,7 +147,7 @@ router.post('/query', (req, res, next) => {
                     if (err) {
                         res.send({ isSuccess: false, message: '查询失败' });
                     } else {
-                        res.send({ isSuccess: false, data: docs, total });
+                        res.send({ isSuccess: true, data: docs, total });
                     }
                 })
             }
