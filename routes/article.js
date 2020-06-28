@@ -87,23 +87,15 @@ router.post('/deleteArticle', (req, res, next) => {
      */
 router.post('/update', (req, res, next) => {
         const { _id, name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
-        console.log(_id, isTop);
         let updateStr = {};
-        if (name) { updateStr.name = name }
-        console.log(_id, isTop);
-        if (labels) { updateStr.labels = labels }
-        console.log(_id, isTop, '1');
-        if (isAuthor) { updateStr.isAuthor = isAuthor }
-        console.log(_id, isTop, '2');
-        if (isTop) { updateStr.isTop = isTop }
-        console.log(_id, isTop, '3');
-        if (isPublish) { updateStr.isPublish = isPublish }
-        console.log(_id, isTop, '4');
-        if (imgUrl) { updateStr.imgUrl = imgUrl }
-        console.log(_id, isTop, '5');
-        if (content) { updateStr.content = content }
-        if (htmlContent) { updateStr.htmlContent = htmlContent }
-        console.log(_id, isTop);
+        if (name != undefined) { updateStr.name = name }
+        if (labels != undefined) { updateStr.labels = labels }
+        if (isAuthor != undefined) { updateStr.isAuthor = isAuthor }
+        if (isTop != undefined) { updateStr.isTop = isTop }
+        if (isPublish != undefined) { updateStr.isPublish = isPublish }
+        if (imgUrl != undefined) { updateStr.imgUrl = imgUrl }
+        if (content != undefined) { updateStr.content = content }
+        if (htmlContent != undefined) { updateStr.htmlContent = htmlContent }
 
         Articles.findByIdAndUpdate({ _id }, updateStr, (err) => {
             if (err) {
