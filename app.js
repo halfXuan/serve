@@ -81,12 +81,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var labelsRouter = require('./routes/label');
 var articleRouter = require('./routes/article')
+var linksRouter = require('./routes/links')
 const { log } = require('console');
 
 app.use('/api/index', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/labels', labelsRouter);
-app.use('/api/articles', articleRouter)
+app.use('/api/articles', articleRouter);
+app.use('/api/links', linksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

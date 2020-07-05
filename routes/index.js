@@ -12,7 +12,7 @@ const path = require('path')
 let upload = multer({
         storage: multer.diskStorage({
             destination: function(req, file, cb) {
-                cb(null, './public/uploads');
+                cb(null, '../public/uploads');
             },
             filename: function(req, file, cb) {
                 var changedName = new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname;
@@ -44,7 +44,7 @@ router.post('/uploadImage', upload.single('file'), (req, res) => {
         message: "上传成功！",
         data: req.file.path,
         originalname: req.file.originalname,
-        path: 'http://localhost:3000/' + pathResult
+        path: 'http://www.heyidangao.com:8089/' + pathResult
     })
 });
 
