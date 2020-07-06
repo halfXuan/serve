@@ -14,11 +14,15 @@ const noToken = [
     '/api/users/login',
     '/api/users/query',
     //文章
+    '/api/article/queryWeb',
+
     '/api/article/query',
     '/api/article/queryById',
     '/api/article/queryLike',
     //标签
     '/api/label/query',
+    //链接
+    '/api/links/query',
     //评论
     '/api/comment/query',
     '/api/comment/queryByArticleId',

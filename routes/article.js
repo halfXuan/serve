@@ -16,7 +16,7 @@ const tokenConfig = require('./../utils/tokens')
  */
 
 router.post('/addArticle', (req, res, next) => {
-        const { _id, name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
+        const { _id, name, note, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
         if (!imgUrl) {
             res.send({ isSuccess: false, message: '请先上传封面图片' });
             return false
@@ -26,7 +26,7 @@ router.post('/addArticle', (req, res, next) => {
             return false
         }
         if (_id) {
-            Articles.findByIdAndUpdate({ _id }, { name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent }, (err) => {
+            Articles.findByIdAndUpdate({ _id }, { name, note, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent }, (err) => {
                 if (err) {
                     res.send({ isSuccess: false, message: '修改失败' });
                 } else {
@@ -43,6 +43,7 @@ router.post('/addArticle', (req, res, next) => {
                     } else {
                         const newArticle = new Articles({
                             name,
+                            note,
                             labels,
                             isAuthor,
                             isTop,
@@ -86,9 +87,10 @@ router.post('/deleteArticle', (req, res, next) => {
      * @Author: luoyong
      */
 router.post('/update', (req, res, next) => {
-        const { _id, name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
+        const { _id, note, name, labels, isAuthor, isTop, isPublish, imgUrl, content, htmlContent } = req.body;
         let updateStr = {};
         if (name != undefined) { updateStr.name = name }
+        if (note != undefined) { updateStr.note = note }
         if (labels != undefined) { updateStr.labels = labels }
         if (isAuthor != undefined) { updateStr.isAuthor = isAuthor }
         if (isTop != undefined) { updateStr.isTop = isTop }
@@ -152,14 +154,41 @@ router.post('/query', (req, res, next) => {
      * @Author: 471826078@qq.com
      */
 router.post('/queryLike', (req, res, next) => {
-    const { str } = req.body
-    var qs = new RegExp(str);
-    Articles.find({ name: qs }, (err, docs) => {
+        const { str } = req.body
+        var qs = new RegExp(str);
+        Articles.find({ name: qs }, (err, docs) => {
+            if (err) {
+                res.send({ isSuccess: false, message: '查询失败' });
+            } else {
+                res.send({ isSuccess: true, data: _id ? docs[0] : docs });
+            }
+        })
+    })
+    //展示页面
+    /**
+     * @name: 分页查询
+     * @param {number} pageSize 每页条数
+     * @param {number} pageNo 当前页数  
+     * @Author: 471826078@qq.com
+     */
+router.get('/queryWeb', (req, res, next) => {
+    const { pageSize, pageNo } = req.query
+    let size = pageSize || 10
+    let num = pageNo - 1 || 0
+    Articles.find({ isPublish: 1 }, (err, doc) => {
         if (err) {
             res.send({ isSuccess: false, message: '查询失败' });
         } else {
-            res.send({ isSuccess: true, data: _id ? docs[0] : docs });
+            const total = doc.length
+            Articles.find().sort({ _id: -1 }).skip(num * size).limit(size).exec((errs, docs) => {
+                if (err) {
+                    res.send({ isSuccess: false, message: '查询失败' });
+                } else {
+                    res.send({ isSuccess: true, data: docs, total });
+                }
+            })
         }
     })
+
 })
 module.exports = router
