@@ -15,7 +15,7 @@ const noToken = [
     '/api/users/query',
     //文章
     '/api/article/queryWeb',
-
+    '/api/article/getPreAndNext',
     '/api/article/query',
     '/api/article/queryById',
     '/api/article/queryLike',

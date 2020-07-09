@@ -123,6 +123,30 @@ router.post('/queryById', (req, res, next) => {
         })
     })
     /**
+     * @name: 获取上一篇和下一篇
+     * @param {number} pageSize 每页条数
+     * @param {number} pageNo 当前页数  
+     * @Author: 471826078@qq.com
+     */
+router.post('/getPreAndNext', (req, res, next) => {
+        const { _id } = req.body
+        Articles.findOne({ _id: { '$lt': _id } }).sort({ _id: -1 }).limit(1).exec((err, docs) => {
+            if (err) {
+                res.send({ isSuccess: false, message: '查询失败' });
+            } else {
+                let last = docs
+                Articles.findOne({ _id: { '$gt': _id } }).sort({ _id: 1 }).limit(1).exec((errs, docs1) => {
+                    if (errs) {
+                        res.send({ isSuccess: false, message: '查询失败' });
+                    } else {
+                        let pre = docs1
+                        res.send({ isSuccess: true, data: { last, pre } });
+                    }
+                })
+            }
+        })
+    })
+    /**
      * @name: 分页查询
      * @param {number} pageSize 每页条数
      * @param {number} pageNo 当前页数  
