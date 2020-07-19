@@ -84,6 +84,7 @@ var articleRouter = require('./routes/article')
 var linksRouter = require('./routes/links')
 var commenRouter = require('./routes/comment')
 var timeRouter = require('./routes/time')
+var ossRouter = require('./routes/oss')
 const { log } = require('console');
 
 app.use('/api/index', indexRouter);
@@ -93,7 +94,9 @@ app.use('/api/articles', articleRouter);
 app.use('/api/links', linksRouter);
 app.use('/api/commens', commenRouter);
 app.use('/api/times', timeRouter)
-    // catch 404 and forward to error handler
+app.use('/api/oss', ossRouter)
+
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
 });
