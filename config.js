@@ -24,9 +24,10 @@ const noToken = [
     //链接
     '/api/links/query',
     //评论
-    '/api/comment/query',
-    '/api/comment/queryByArticleId',
-    '/api/comment/queryAll'
+    '/api/commens/addComment',
+    '/api/commens/query',
+    '/api/commens/queryByArticleId',
+    '/api/commens/queryAll'
 
 ]
 module.exports = {

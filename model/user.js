@@ -23,11 +23,21 @@ const userSchema = new Schema({
         required: true
     },
     password: {
-        type:String,
+        type: String,
         default: '888888'
     },
     token: {
         type: String
+    },
+    address: {
+        type: String
+    },
+    birthday: {
+        type: String
+    },
+    avatar: {
+        type: String,
+        default: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
     },
     createDate: {
         type: String

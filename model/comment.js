@@ -3,11 +3,11 @@
  * @Date: 2020-06-01 09:33:48
  * @LastEditors: 471826078@qq.com
  * @LastEditTime: 2020-06-01 09:33:58
- */ 
+ */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-// 如果用户已登录，传入userId;
-// 没有登录传入用户邮箱和昵称注册用户
+    // 如果用户已登录，传入userId;
+    // 没有登录传入用户邮箱和昵称注册用户
 const commentSchema = new Schema({
     articleId: {
         type: String,
@@ -26,22 +26,25 @@ const commentSchema = new Schema({
         type: String,
     },
     recoveryId: {
-        String
+        type: String,
     },
     recoveryInfo: {
         type: Object
     },
-    content:{
+    content: {
         type: String,
         required: true
     },
-    createDate:{
+    createDate: {
         type: String
     },
-    likes:{
+    likes: {
         type: Number,
-        default:0
+        default: 0
+    },
+    netAddress: {
+        type: String,
     }
 })
 
-module.exports = mongoose.model('Comment',commentSchema)
+module.exports = mongoose.model('Comment', commentSchema)
