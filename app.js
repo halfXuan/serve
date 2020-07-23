@@ -85,6 +85,7 @@ var linksRouter = require('./routes/links')
 var commenRouter = require('./routes/comment')
 var timeRouter = require('./routes/time')
 var ossRouter = require('./routes/oss')
+var friendsRouter = require('./routes/friendLink')
 const { log } = require('console');
 
 app.use('/api/index', indexRouter);
@@ -95,6 +96,7 @@ app.use('/api/links', linksRouter);
 app.use('/api/commens', commenRouter);
 app.use('/api/times', timeRouter)
 app.use('/api/oss', ossRouter)
+app.use('/api/friendsLink', friendsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

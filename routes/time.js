@@ -7,16 +7,17 @@ const Times = require('./../model/time')
      * @Author: luoyong
      */
 router.post('/add', (req, res, next) => {
-        const { _id, description, name } = req.body;
+        const { _id, description, name, timeLineDate } = req.body;
         if (_id) {
-            Times.findByIdAndUpdate({ _id }, { description, name }, (err) => {
+            Times.findByIdAndUpdate({ _id }, { description, name, timeLineDate: new Date(timeLineDate).getTime() / 1000 }, (err) => {
                 const datas = err ? { isSuccess: false, message: '修改失败' } : { isSuccess: true, message: '修改成功' }
                 res.send(datas);
             })
         } else {
             const newTimes = new Times({
                 name,
-                description
+                description,
+                timeLineDate: new Date(timeLineDate).getTime() / 1000
             })
             Times.find({ name }, (err, doc) => {
                 if (err) {

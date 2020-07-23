@@ -119,6 +119,7 @@ router.post('/queryById', (req, res, next) => {
                 res.send({ isSuccess: false, message: '查询失败' });
             } else {
                 res.send({ isSuccess: true, data: docs[0] });
+                Articles.update({ _id: req.params.id }, { $inc: { lookCount: 1 } }, { multi: false }, () => {})
             }
         })
     })
@@ -153,6 +154,7 @@ router.post('/getPreAndNext', (req, res, next) => {
      * @Author: 471826078@qq.com
      */
 router.post('/query', (req, res, next) => {
+        console.log(req);
         const { pageSize, pageNo } = req.body
         let size = pageSize || 10
         let num = pageNo - 1 || 0
@@ -196,6 +198,7 @@ router.post('/queryLike', (req, res, next) => {
      * @Author: 471826078@qq.com
      */
 router.get('/queryWeb', (req, res, next) => {
+    console.log(req.ip);
     const { pageSize, pageNo } = req.query
     let size = pageSize || 10
     let num = pageNo - 1 || 0

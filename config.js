@@ -9,8 +9,8 @@ const adminPhone = '18727994495'
 const jwtSecret = 'coderLuo-blog'
 const OSS_CONFIG = {
     region: 'oss-cn-beijing',
-    accessKeyId: 'LTAI4G36Cd9KuFm435cCasNr',
-    accessKeySecret: '7iN0KoVgqCV0Bi3qPMtllqwlLmznoH',
+    // accessKeyId: 'LTAI4G36Cd9KuFm435cCasNr',
+    // accessKeySecret: '7iN0KoVgqCV0Bi3qPMtllqwlLmznoH',
     bucket: 'qingqianblog',
     endPoint: 'oss-cn-beijing.aliyuncs.com',
     BucketName: 'qingqianblog.oss-cn-beijing.aliyuncs.com',

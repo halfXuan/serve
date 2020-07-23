@@ -43,6 +43,18 @@ const articleSchema = new Schema({
     },
     htmlContent: {
         type: String
+    },
+    commentCount: { //评论数
+        type: Number,
+        default: 0
+    },
+    lookCount: { //阅读次数
+        type: Number,
+        default: 0
+    },
+    likeCount: { //点赞数
+        type: Number,
+        default: 0
     }
 
 })

@@ -17,8 +17,6 @@ router.post('/addComment', (req, res, next) => {
     const nowDate = parseInt(dates.getTime())
     if (token) {
         const { exp, id } = tokenConfig.verifyToken(token)
-
-
         Users.findById({ _id: id }, (err, doc) => {
             if (err) {
                 res.send({ isSuccess: false, message: '评论失败' });
@@ -48,7 +46,7 @@ router.post('/addComment', (req, res, next) => {
                                     datas = { isSuccess: false, message: '评论失败' }
                                 } else {
                                     datas = { isSuccess: true, message: '评论成功' }
-                                    Articles.update({ _id: req.params.id }, { $inc: { count: 1 } }, { multi: false }, () => {})
+                                    Articles.update({ _id: req.params.id }, { $inc: { commentCount: 1 } }, { multi: false }, () => {})
                                 }
                                 res.send(datas);
                             })

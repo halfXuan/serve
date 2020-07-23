@@ -9,6 +9,10 @@ const timeSchema = new Schema({
         type: String,
         required: true
     },
+    timeLineDate: {
+        type: Number,
+        required: true
+    },
     createDate: {
         type: Number,
         required: true,
